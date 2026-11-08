@@ -1,0 +1,14 @@
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.csproj.AssemblyReference.cache
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\spa.proxy.json
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\dotnet-watch\Microsoft.NET.Sdk.BlazorWeb.DotNetWatch.lib.module.js
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\dotnet-watch\Microsoft.NET.Sdk.BlazorWeb.DotNetWatch.BrowserTools.js
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\dotnet-watch\Microsoft.NET.Sdk.BlazorWeb.DotNetWatch.BrowserTools.Config.js
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\dotnet-watch\browser-tools-key.public.json
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\dotnet-watch\browser-tools-key.private.json
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.AssemblyInfoInputs.cache
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.AssemblyInfo.cs
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.csproj.CoreCompileInputs.cache
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cache
