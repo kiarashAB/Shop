@@ -36,8 +36,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     o.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "rakhshansam",
-        ValidateAudience = true, ValidAudience = builder.Configuration["Jwt:Audience"] ?? "rakhshansam",
+        ValidateIssuer = true, ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "golrokhshop",
+        ValidateAudience = true, ValidAudience = builder.Configuration["Jwt:Audience"] ?? "golrokhshop",
         ValidateIssuerSigningKey = true, IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateLifetime = true, ClockSkew = TimeSpan.FromMinutes(1)
     };

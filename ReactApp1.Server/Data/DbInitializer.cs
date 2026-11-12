@@ -55,9 +55,10 @@ public static class DbInitializer
         {
             string[][] cats =
             [
-                ["کولر گازی سام", "sam-split"], ["داکت اسپلیت", "duct-split"], ["کولر گازی سامسونگ", "samsung-split"],
-                ["قطعات کولر گازی", "ac-parts"], ["برد", "boards"], ["ریموت کنترل", "remotes"], ["موتور فن", "fan-motors"],
-                ["کمپرسور", "compressors"], ["پنل داخلی و خارجی", "panels"], ["سایر قطعات و تجهیزات", "other-parts"]
+                ["آرایش صورت", "face-makeup"], ["آرایش چشم", "eye-makeup"], ["آرایش لب", "lip-makeup"],
+                ["مراقبت پوست", "skincare"], ["مراقبت مو", "haircare"], ["عطر و ادکلن", "perfume"],
+                ["بهداشت و زیبایی", "hygiene-beauty"], ["ابزار و لوازم آرایشی", "makeup-tools"],
+                ["محصولات آقایان", "men-grooming"], ["سایر محصولات", "other-products"]
             ];
             for (var i = 0; i < cats.Length; i++)
                 db.Categories.Add(new Category { Name = cats[i][0], Slug = cats[i][1], SortOrder = i });
