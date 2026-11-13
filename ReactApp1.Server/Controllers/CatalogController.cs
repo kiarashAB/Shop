@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
 using ReactApp1.Server.Domain;
@@ -20,7 +21,7 @@ public class CatalogController(AppDbContext db) : ControllerBase
         Ok(await db.Banners.AsNoTracking().Where(b => b.IsActive && b.Placement == placement).OrderBy(b => b.SortOrder)
             .Select(b => new { b.Id, b.Title, b.Subtitle, b.DiscountLabel, b.ButtonText, b.ImageUrl, b.LinkUrl }).ToListAsync(ct));
 
-    [HttpGet("products")]
+    [HttpGet("products"), EnableRateLimiting("search")]
     public async Task<IActionResult> Products([FromQuery] string? categorySlug, [FromQuery] string? search, [FromQuery] bool discounted,
         [FromQuery] string sort = "new", [FromQuery] int page = 1, [FromQuery] int pageSize = 12, CancellationToken ct = default)
     {

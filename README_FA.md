@@ -5,7 +5,6 @@
    ```
    cd ReactApp1.Server
    dotnet user-secrets init
-   dotnet user-secrets set "Jwt:Key" "یک-رشتهٔ-تصادفی-حداقل-۳۲-کاراکتر"
    dotnet user-secrets set "Seed:AdminPassword" "رمز-قوی-حداقل-۱۰-کاراکتر"
    ```
 3. ساخت Migration اولیه (هنوز ساخته نشده، چون در محیط من dotnet نبود):
