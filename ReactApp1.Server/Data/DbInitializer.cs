@@ -10,7 +10,12 @@ public static class DbInitializer
     {
         var db = sp.GetRequiredService<AppDbContext>();
         var log = sp.GetRequiredService<ILoggerFactory>().CreateLogger("DbInitializer");
-        if (migrate) await db.Database.MigrateAsync();
+        if (migrate)
+        {
+            // اگر Migration ساخته شده باشد همان اعمال می‌شود؛ در غیر این صورت (توسعهٔ محلی) دیتابیس و جدول‌ها از روی مدل ساخته می‌شوند.
+            if (db.Database.GetMigrations().Any()) await db.Database.MigrateAsync();
+            else await db.Database.EnsureCreatedAsync();
+        }
 
         await SeedReferenceDataAsync(db);
 
