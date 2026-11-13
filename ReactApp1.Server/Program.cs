@@ -14,7 +14,7 @@ using ReactApp1.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Default")
-    ?? throw new InvalidOperationException("ConnectionStrings:Data Source=LAPTOP-MVEJ1FO4\\SQLEXPRESS;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0");
+    ?? throw new InvalidOperationException("ConnectionStrings:Default تنظیم نشده است (appsettings.Development.json یا user-secrets).");
 var jwtKey = builder.Configuration["Jwt:Key"];
 if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
     throw new InvalidOperationException("Jwt:Key باید حداقل ۳۲ کاراکتر باشد (با dotnet user-secrets تنظیم کنید).");
@@ -36,8 +36,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     o.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "rakhshansam",
-        ValidateAudience = true, ValidAudience = builder.Configuration["Jwt:Audience"] ?? "rakhshansam",
+        ValidateIssuer = true, ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "golrokhshop",
+        ValidateAudience = true, ValidAudience = builder.Configuration["Jwt:Audience"] ?? "golrokhshop",
         ValidateIssuerSigningKey = true, IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateLifetime = true, ClockSkew = TimeSpan.FromMinutes(1)
     };

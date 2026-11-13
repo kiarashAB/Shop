@@ -30,7 +30,7 @@ public class JwtService(IConfiguration cfg)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["Jwt:Key"]!));
         var token = new JwtSecurityToken(
-            issuer: cfg["Jwt:Issuer"] ?? "rakhshansam", audience: cfg["Jwt:Audience"] ?? "rakhshansam",
+            issuer: cfg["Jwt:Issuer"] ?? "golrokhshop", audience: cfg["Jwt:Audience"] ?? "golrokhshop",
             claims: [new(ClaimTypes.NameIdentifier, u.Id.ToString()), new(ClaimTypes.Name, u.UserName), new(ClaimTypes.Role, u.Role.ToString())],
             expires: DateTime.UtcNow.AddHours(8), signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
         return new JwtSecurityTokenHandler().WriteToken(token);

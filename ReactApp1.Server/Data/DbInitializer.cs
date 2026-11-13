@@ -10,7 +10,12 @@ public static class DbInitializer
     {
         var db = sp.GetRequiredService<AppDbContext>();
         var log = sp.GetRequiredService<ILoggerFactory>().CreateLogger("DbInitializer");
-        if (migrate) await db.Database.MigrateAsync();
+        if (migrate)
+        {
+            // اگر Migration ساخته شده باشد همان اعمال می‌شود؛ در غیر این صورت (توسعهٔ محلی) دیتابیس و جدول‌ها از روی مدل ساخته می‌شوند.
+            if (db.Database.GetMigrations().Any()) await db.Database.MigrateAsync();
+            else await db.Database.EnsureCreatedAsync();
+        }
 
         await SeedReferenceDataAsync(db);
 
@@ -55,9 +60,10 @@ public static class DbInitializer
         {
             string[][] cats =
             [
-                ["کولر گازی سام", "sam-split"], ["داکت اسپلیت", "duct-split"], ["کولر گازی سامسونگ", "samsung-split"],
-                ["قطعات کولر گازی", "ac-parts"], ["برد", "boards"], ["ریموت کنترل", "remotes"], ["موتور فن", "fan-motors"],
-                ["کمپرسور", "compressors"], ["پنل داخلی و خارجی", "panels"], ["سایر قطعات و تجهیزات", "other-parts"]
+                ["آرایش صورت", "face-makeup"], ["آرایش چشم", "eye-makeup"], ["آرایش لب", "lip-makeup"],
+                ["مراقبت پوست", "skincare"], ["مراقبت مو", "haircare"], ["عطر و ادکلن", "perfume"],
+                ["بهداشت و زیبایی", "hygiene-beauty"], ["ابزار و لوازم آرایشی", "makeup-tools"],
+                ["محصولات آقایان", "men-grooming"], ["سایر محصولات", "other-products"]
             ];
             for (var i = 0; i < cats.Length; i++)
                 db.Categories.Add(new Category { Name = cats[i][0], Slug = cats[i][1], SortOrder = i });
