@@ -14,7 +14,8 @@ using ReactApp1.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Default")
-    ?? throw new InvalidOperationException("ConnectionStrings:Default تنظیم نشده است (appsettings.Development.json یا user-secrets).");
+    ?? throw new InvalidOperationException("ConnectionStrings: DefaultConnection : "Server=LAPTOP-MVEJ1FO4\\SQLEXPRESS;Database=SamDb;Trusted_Connection=True;TrustServerCertificate=True;",
+    "AppDbContext": "LAPTOP-MVEJ1FO4\\SQLEXPRESS;Database=AppDbContext;Trusted_Connection=True;MultipleActiveResultSets=true"");
 var jwtKey = builder.Configuration["Jwt:Key"];
 if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
     throw new InvalidOperationException("Jwt:Key باید حداقل ۳۲ کاراکتر باشد (با dotnet user-secrets تنظیم کنید).");
