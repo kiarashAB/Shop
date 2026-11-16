@@ -21,15 +21,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("Default")
-<<<<<<< HEAD
-    ?? throw new InvalidOperationException("ConnectionStrings: DefaultConnection : "Server=LAPTOP-MVEJ1FO4\\SQLEXPRESS;Database=SamDb;Trusted_Connection=True;TrustServerCertificate=True;",
-    "AppDbContext": "LAPTOP-MVEJ1FO4\\SQLEXPRESS;Database=AppDbContext;Trusted_Connection=True;MultipleActiveResultSets=true"");
-var jwtKey = builder.Configuration["Jwt:Key"];
-if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
-    throw new InvalidOperationException("Jwt:Key باید حداقل ۳۲ کاراکتر باشد (با dotnet user-secrets تنظیم کنید).");
-=======
     ?? throw new InvalidOperationException("ConnectionStrings:Default تنظیم نشده است (appsettings.Development.json یا user-secrets).");
->>>>>>> c8b85c942fd775769d52d422f2c2f9e115678b47
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
