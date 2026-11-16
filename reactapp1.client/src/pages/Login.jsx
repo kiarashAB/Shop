@@ -14,7 +14,6 @@ export default function Login() {
     setLoading(true);
     try {
       const { data } = await api.post('/auth/login', form);
-      sessionStorage.setItem('auth_token', data.token);
       sessionStorage.setItem('auth_user', JSON.stringify({ userName: data.userName, fullName: data.fullName, role: data.role }));
       navigate('/');
     } catch (err) {
