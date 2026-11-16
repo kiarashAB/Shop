@@ -19,7 +19,7 @@ export default function Header() {
     <header className="mx-auto max-w-[1440px] px-6 pt-1">
       <div className="flex items-center gap-6 py-3">
         <Link to="/" className="border-b border-navy pb-0.5 text-3xl font-light tracking-wide whitespace-nowrap">
-          رخشان سام تهویه
+          گلرخ
         </Link>
         <form onSubmit={submit} className="flex h-12 flex-1 items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 shadow-sm">
           <SearchIcon className="text-gray-400" />

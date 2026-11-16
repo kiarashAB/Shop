@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
 using ReactApp1.Server.Domain;
@@ -20,7 +21,7 @@ public class CatalogController(AppDbContext db) : ControllerBase
         Ok(await db.Banners.AsNoTracking().Where(b => b.IsActive && b.Placement == placement).OrderBy(b => b.SortOrder)
             .Select(b => new { b.Id, b.Title, b.Subtitle, b.DiscountLabel, b.ButtonText, b.ImageUrl, b.LinkUrl }).ToListAsync(ct));
 
-    [HttpGet("products")]
+    [HttpGet("products"), EnableRateLimiting("search")]
     public async Task<IActionResult> Products([FromQuery] string? categorySlug, [FromQuery] string? search, [FromQuery] bool discounted,
         [FromQuery] string sort = "new", [FromQuery] int page = 1, [FromQuery] int pageSize = 12, CancellationToken ct = default)
     {
@@ -51,5 +52,30 @@ public class CatalogController(AppDbContext db) : ControllerBase
             FinalPrice = Math.Round(p.SalePrice * (1 - p.DiscountPercent / 100m), 0, MidpointRounding.AwayFromZero)
         });
         return Ok(new { items, total, page, pageSize });
+    }
+
+    [HttpGet("products/{slug}")]
+    public async Task<IActionResult> ProductBySlug(string slug, CancellationToken ct)
+    {
+        var p = await db.Products.AsNoTracking().Where(x => x.Slug == slug && x.IsPublished)
+            .Select(x => new
+            {
+                x.Id, x.Name, x.Slug, x.Sku, x.PartNumber, x.Description, x.SalePrice, x.DiscountPercent,
+                InStock = x.StockQuantity > 0, x.Warranty, Condition = x.Condition.ToString(),
+                x.SeoTitle, x.SeoDescription, x.SeoKeywords,
+                CategoryName = x.Category!.Name, CategorySlug = x.Category!.Slug,
+                BrandName = x.Brand != null ? x.Brand.Name : null,
+                Images = x.Images.OrderBy(i => i.SortOrder).Select(i => new { i.Url, i.Alt }),
+                Specifications = x.Specifications.Select(s => new { s.Name, s.Value })
+            }).FirstOrDefaultAsync(ct);
+        if (p is null) return NotFound();
+        return Ok(new
+        {
+            p.Id, p.Name, p.Slug, p.Sku, p.PartNumber, p.Description, p.InStock, p.Warranty, p.Condition,
+            p.SeoTitle, p.SeoDescription, p.SeoKeywords, p.CategoryName, p.CategorySlug, p.BrandName,
+            p.Images, p.Specifications, p.DiscountPercent,
+            Price = p.SalePrice,
+            FinalPrice = Math.Round(p.SalePrice * (1 - p.DiscountPercent / 100m), 0, MidpointRounding.AwayFromZero)
+        });
     }
 }
