@@ -14,7 +14,7 @@ public record ReverseDto(string Reason);
 public record PaymentDto(int PartyId, decimal Amount, PaymentMethod Method, int FinancialAccountId, DateTime Date,
     string? ReferenceNumber, int? PurchaseReceiptId, string IdempotencyKey, string? Note);
 public record PaymentRequest(PaymentDirection Direction, int PartyId, decimal Amount, PaymentMethod Method, int AccountId,
-    string? Reference, DateTime Date, int? ReceiptId, string IdempotencyKey, string? Note);
+    string? Reference, DateTime Date, int? ReceiptId, string IdempotencyKey, string? Note, int? OrderId = null);
 
 public record IssueStockDto(int ProductId, int WarehouseId, int Quantity, StockReason Reason, string? Note, DateTime? Date);
 

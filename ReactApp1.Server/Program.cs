@@ -123,6 +123,8 @@ builder.Services.AddScoped<LedgerService>();
 builder.Services.AddScoped<InventoryService>();
 builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<PurchaseService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddSingleton<IPasswordHasher<AppUser>, PasswordHasher<AppUser>>();
 
 // =========================

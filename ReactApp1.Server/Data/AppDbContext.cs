@@ -25,6 +25,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<Banner> Banners => Set<Banner>();
     public DbSet<DocumentCounter> DocumentCounters => Set<DocumentCounter>();
+    public DbSet<Address> Addresses => Set<Address>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<ShippingMethod> ShippingMethods => Set<ShippingMethod>();
+    public DbSet<Discount> Discounts => Set<Discount>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<OrderStatusHistory> OrderStatusHistories => Set<OrderStatusHistory>();
+    public DbSet<Shipment> Shipments => Set<Shipment>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder b)
     {
@@ -33,10 +42,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder m)
     {
-        // هیچ حذف آبشاری‌ای وجود ندارد: اسناد و تاریخچه نباید با حذف رکورد دیگر پاک شوند.
-        foreach (var fk in m.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            fk.DeleteBehavior = DeleteBehavior.Restrict;
-
         m.Entity<AppUser>().HasIndex(x => x.UserName).IsUnique();
         m.Entity<Category>().HasIndex(x => x.Slug).IsUnique();
         m.Entity<Brand>().HasIndex(x => x.Slug).IsUnique();
@@ -81,5 +86,48 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         m.Entity<ProductStock>().HasOne<Product>().WithMany().HasForeignKey(s => s.ProductId);
         m.Entity<ProductStock>().HasOne<Warehouse>().WithMany().HasForeignKey(s => s.WarehouseId);
         m.Entity<PurchaseReceipt>().HasOne<FinancialAccount>().WithMany().HasForeignKey(r => r.PaymentAccountId);
+
+        // ---- فروشگاه: آدرس، سبد، ارسال، تخفیف، سفارش ----
+        m.Entity<Address>(e =>
+        {
+            e.HasIndex(a => a.UserId);
+            e.HasOne<AppUser>().WithMany().HasForeignKey(a => a.UserId);
+        });
+        m.Entity<Cart>(e =>
+        {
+            e.HasIndex(c => c.UserId).IsUnique();
+            e.HasOne<AppUser>().WithMany().HasForeignKey(c => c.UserId);
+        });
+        m.Entity<CartItem>(e =>
+        {
+            e.HasIndex(i => new { i.CartId, i.ProductId }).IsUnique();
+            e.HasOne<Product>().WithMany().HasForeignKey(i => i.ProductId);
+        });
+        m.Entity<Discount>().HasIndex(d => d.Code).IsUnique();
+        m.Entity<Order>(e =>
+        {
+            e.HasIndex(o => o.Number).IsUnique();
+            e.HasIndex(o => o.IdempotencyKey).IsUnique();
+            e.HasIndex(o => new { o.UserId, o.CreatedAt });
+            e.HasIndex(o => o.Status);
+            e.Property(o => o.ConcurrencyStamp).IsConcurrencyToken();
+            e.HasOne<AppUser>().WithMany().HasForeignKey(o => o.UserId);
+            e.HasOne<Party>().WithMany().HasForeignKey(o => o.PartyId);
+            e.HasOne<ShippingMethod>().WithMany().HasForeignKey(o => o.ShippingMethodId);
+            e.HasOne(o => o.FinancialDocument).WithMany().HasForeignKey(o => o.FinancialDocumentId);
+            e.HasOne(o => o.Shipment).WithOne().HasForeignKey<Shipment>(s => s.OrderId);
+        });
+        m.Entity<OrderItem>(e =>
+        {
+            e.HasOne<Product>().WithMany().HasForeignKey(i => i.ProductId);
+            e.HasOne<Warehouse>().WithMany().HasForeignKey(i => i.WarehouseId);
+        });
+        m.Entity<OrderStatusHistory>().HasOne<AppUser>().WithMany().HasForeignKey(h => h.ChangedByUserId);
+        m.Entity<Payment>().HasOne<Order>().WithMany().HasForeignKey(p => p.OrderId);
+
+        // هیچ حذف آبشاری‌ای وجود ندارد: اسناد و تاریخچه نباید با حذف رکورد دیگر پاک شوند.
+        // (باید بعد از همهٔ پیکربندی‌ها بیاید تا کلیدهای خارجیِ صریح هم Restrict شوند.)
+        foreach (var fk in m.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            fk.DeleteBehavior = DeleteBehavior.Restrict;
     }
 }

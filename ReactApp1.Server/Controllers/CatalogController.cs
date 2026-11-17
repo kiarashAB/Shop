@@ -61,7 +61,7 @@ public class CatalogController(AppDbContext db) : ControllerBase
             .Select(x => new
             {
                 x.Id, x.Name, x.Slug, x.Sku, x.PartNumber, x.Description, x.SalePrice, x.DiscountPercent,
-                InStock = x.StockQuantity > 0, x.Warranty, Condition = x.Condition.ToString(),
+                InStock = x.StockQuantity > 0, x.Warranty, x.Condition,
                 x.SeoTitle, x.SeoDescription, x.SeoKeywords,
                 CategoryName = x.Category!.Name, CategorySlug = x.Category!.Slug,
                 BrandName = x.Brand != null ? x.Brand.Name : null,

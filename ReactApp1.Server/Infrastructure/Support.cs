@@ -13,6 +13,11 @@ public static class AppRoles
     public const string Catalog = "SuperAdmin,Admin,ProductManager";
     public const string People = "SuperAdmin,Admin,Accountant,OrderManager,Support,InventoryManager";
     public const string Content = "SuperAdmin,Admin,ContentManager";
+    public const string OrderView = "SuperAdmin,Admin,OrderManager,Accountant,Support";
+    public const string Orders = "SuperAdmin,Admin,OrderManager";
+    public const string OrdersAndFinance = "SuperAdmin,Admin,OrderManager,Accountant";
+    public const string Discounts = "SuperAdmin,Admin,OrderManager";
+    public const string Settings = "SuperAdmin,Admin";
 }
 
 public static class UserExtensions
