@@ -12,3 +12,13 @@ C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\De
 C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.csproj.CoreCompileInputs.cache
 C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\kiarash.pc\Downloads\ReactApp1-stage1\ReactApp1\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cache
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.csproj.AssemblyReference.cache
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\spa.proxy.json
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\rpswa.dswa.cache.json
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.GeneratedMSBuildEditorConfig.editorconfig
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.AssemblyInfoInputs.cache
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.AssemblyInfo.cs
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.csproj.CoreCompileInputs.cache
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cs
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.MvcApplicationPartsAssemblyInfo.cache
+F:\kiarash\Shop\Shop\ReactApp1.Server\obj\Debug\net10.0\ReactApp1.Server.sourcelink.json
