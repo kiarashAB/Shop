@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from '../components/Icons';
 import useApi from '../hooks/useApi';
+import { useCart } from '../context/CartContext';
 import { formatNumber, formatToman } from '../lib/format';
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const { data: p, loading, error } = useApi(`/products/${slug}`);
   const [activeImg, setActiveImg] = useState(0);
+  const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { add, MAX_QTY } = useCart();
 
   if (loading) return <p className="py-32 text-center text-gray-400">در حال بارگذاری…</p>;
   if (error?.response?.status === 404 || (!loading && !p)) {
@@ -69,12 +73,30 @@ export default function ProductDetail() {
           {p.warranty && <div className="mt-4 text-sm text-gray-600">گارانتی: {p.warranty}</div>}
           <div className="mt-2 text-sm text-gray-600">وضعیت: {p.condition === 'New' ? 'نو' : p.condition}</div>
 
+          {p.inStock && (
+            <div className="mt-8 flex items-center gap-3">
+              <span className="text-sm text-gray-600">تعداد</span>
+              <div className="flex items-center rounded-xl border border-gray-200">
+                <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))} className="h-10 w-10 text-lg hover:text-brand" aria-label="کاهش">−</button>
+                <span className="w-10 text-center">{formatNumber(qty)}</span>
+                <button type="button" onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))} className="h-10 w-10 text-lg hover:text-brand" aria-label="افزایش">+</button>
+              </div>
+            </div>
+          )}
+
           <button
             disabled={!p.inStock}
-            className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand py-4 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            onClick={() => { add(p.id, qty); setAdded(true); setTimeout(() => setAdded(false), 4000); }}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand py-4 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             افزودن به سبد خرید <ArrowLeft />
           </button>
+          {added && (
+            <div className="mt-3 rounded-xl bg-green-50 px-4 py-3 text-sm text-green-700">
+              به سبد خرید اضافه شد. <Link to="/cart" className="font-bold underline">مشاهده سبد خرید</Link>
+            </div>
+          )}
+          <p className="mt-2 text-xs text-gray-400">موجودی نهایی هنگام ثبت سفارش توسط سرور بررسی می‌شود.</p>
 
           {p.description && (
             <div className="mt-10">

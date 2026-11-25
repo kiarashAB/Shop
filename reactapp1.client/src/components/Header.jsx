@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useApi from '../hooks/useApi';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import { CartIcon, SearchIcon, UserIcon } from './Icons';
 
 export default function Header() {
   const { data: categories } = useApi('/categories');
   const [q, setQ] = useState('');
   const navigate = useNavigate();
+  const { user, logout, isCustomer } = useAuth();
+  const { count } = useCart();
 
   const submit = (e) => {
     e.preventDefault();
@@ -29,8 +33,24 @@ export default function Header() {
           />
         </form>
         <div className="flex items-center gap-5 text-sm">
-          <Link to="/login" className="flex items-center gap-2 hover:text-brand"><UserIcon /> ورود/ثبت‌نام</Link>
-          <Link to="/cart" className="flex items-center gap-2 hover:text-brand" aria-label="سبد خرید"><CartIcon /> سبد خرید</Link>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Link to={isCustomer ? '/account' : '/login'} className="flex items-center gap-2 hover:text-brand whitespace-nowrap">
+                <UserIcon /> {user.fullName}
+              </Link>
+              <button onClick={async () => { await logout(); navigate('/'); }} className="text-gray-500 hover:text-brand">خروج</button>
+            </div>
+          ) : (
+            <Link to="/login" className="flex items-center gap-2 hover:text-brand whitespace-nowrap"><UserIcon /> ورود/ثبت‌نام</Link>
+          )}
+          <Link to="/cart" className="relative flex items-center gap-2 hover:text-brand whitespace-nowrap" aria-label="سبد خرید">
+            <CartIcon /> سبد خرید
+            {count > 0 && (
+              <span className="absolute -top-2 right-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand px-1 text-[11px] text-white">
+                {count.toLocaleString('fa-IR')}
+              </span>
+            )}
+          </Link>
         </div>
       </div>
 

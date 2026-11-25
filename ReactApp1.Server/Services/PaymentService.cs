@@ -62,7 +62,7 @@ public class PaymentService(AppDbContext db, LedgerService ledger)
         var payment = new Payment
         {
             Number = number, Direction = req.Direction, PartyId = party.Id, Amount = req.Amount, Method = req.Method,
-            FinancialAccountId = account.Id, ReferenceNumber = req.Reference, Date = req.Date, PurchaseReceiptId = req.ReceiptId,
+            FinancialAccountId = account.Id, ReferenceNumber = req.Reference, Date = req.Date, PurchaseReceiptId = req.ReceiptId, OrderId = req.OrderId,
             IdempotencyKey = req.IdempotencyKey, FinancialDocument = doc, Note = req.Note, CreatedByUserId = userId
         };
         db.Payments.Add(payment);

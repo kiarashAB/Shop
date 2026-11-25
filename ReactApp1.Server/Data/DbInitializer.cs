@@ -10,7 +10,12 @@ public static class DbInitializer
     {
         var db = sp.GetRequiredService<AppDbContext>();
         var log = sp.GetRequiredService<ILoggerFactory>().CreateLogger("DbInitializer");
-        if (migrate) await db.Database.MigrateAsync();
+        if (migrate)
+        {
+            // اگر Migration ساخته شده باشد همان اعمال می‌شود؛ در غیر این صورت (توسعهٔ محلی) دیتابیس و جدول‌ها از روی مدل ساخته می‌شوند.
+            if (db.Database.GetMigrations().Any()) await db.Database.MigrateAsync();
+            else await db.Database.EnsureCreatedAsync();
+        }
 
         await SeedReferenceDataAsync(db);
 
@@ -47,9 +52,13 @@ public static class DbInitializer
         }
         if (!await db.Warehouses.AnyAsync()) db.Warehouses.Add(new Warehouse { Name = "انبار اصلی" });
 
-        foreach (var key in new[] { "FD", "PAY", "PR", "WO" })
+        foreach (var key in new[] { "FD", "PAY", "PR", "WO", "OR" })
             if (!await db.DocumentCounters.AnyAsync(c => c.Key == key))
                 db.DocumentCounters.Add(new DocumentCounter { Key = key });
+
+        // هزینهٔ ارسال پیش‌فرض صفر است؛ مدیر قیمت واقعی را از «روش‌های ارسال» تنظیم می‌کند.
+        if (!await db.ShippingMethods.AnyAsync())
+            db.ShippingMethods.Add(new ShippingMethod { Name = "ارسال استاندارد", Description = "هزینه طبق تنظیمات فروشگاه", Price = 0, SortOrder = 0 });
 
         if (!await db.Categories.AnyAsync())
         {

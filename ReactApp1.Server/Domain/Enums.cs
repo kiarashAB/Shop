@@ -1,6 +1,6 @@
 namespace ReactApp1.Server.Domain;
 
-public enum UserRole { SuperAdmin, Admin, ProductManager, OrderManager, InventoryManager, Accountant, Support, ContentManager }
+public enum UserRole { SuperAdmin, Admin, ProductManager, OrderManager, InventoryManager, Accountant, Support, ContentManager, Customer }
 public enum ProductCondition { New, Sealed, Used }
 public enum ReceiptStatus { Draft, Confirmed, Reversed }
 public enum StockReason { Purchase, PurchaseReversal, Sale, InternalUse, Damage, Waste, Return, Adjustment }
@@ -11,3 +11,5 @@ public enum PaymentDirection { ToSupplier, FromCustomer }
 public enum PaymentMethod { Cash, Card, Transfer, Cheque, Gateway }
 public enum PaymentStatus { Posted, Reversed }
 public enum BannerPlacement { Hero, Promo }
+public enum OrderStatus { PendingPayment, Processing, Shipped, Delivered, Cancelled }
+public enum DiscountType { Percent, FixedAmount }
